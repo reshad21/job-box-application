@@ -10,25 +10,9 @@ const initialState = {
     error: ""
 };
 
-// const authReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//         case "addtocart":
-//             return {
-
-//             }
-
-//         default:
-//             return {
-//                 state
-//             }
-//     }
-// }
-
-// const [state,dispatch] = useReducer(initialState,reducer);
-
-const createUser = createAsyncThunk("auth/createUser", async ({ email, password }) => {
+export const createUser = createAsyncThunk("auth/createUser", async ({ email, password }) => {
     const data = await createUserWithEmailAndPassword(auth, email, password);
-    return data;
+    return data.user.email;
 })
 
 export const authSlice = createSlice({
