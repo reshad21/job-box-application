@@ -5,9 +5,9 @@ import routes from "./routes/routes";
 function App() {
   return (
     <>
-    <Provider store={store}>
-      <RouterProvider router={routes} />
-    </Provider>
+      <Provider store={store}>
+        <RouterProvider router={routes} />
+      </Provider>
     </>
   );
 }
