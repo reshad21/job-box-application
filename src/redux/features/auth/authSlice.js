@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import auth from './../../../firebase/firebase.config';
 
 const initialState = {
@@ -20,16 +20,25 @@ export const loginUser = createAsyncThunk("auth/loginUser", async ({ email, pass
     return data.user.email;
 })
 
+export const googleLogin = createAsyncThunk("auth/googleLogin", async () => {
+    const provider = new GoogleAuthProvider();
+    const data = await signInWithPopup(auth, provider);
+    return data.user.email;
+})
+
 export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        logOut: (state, action) => {
+        logOut: (state) => {
             state.email = "";
         },
         setUser: (state, action) => {
             state.email = action.payload;
             state.isLoading = false;
+        },
+        toggleLoading: (state) => {
+            state.isLoading = !state.isLoading;
         }
     },
     extraReducers: (builder) => {
@@ -68,8 +77,25 @@ export const authSlice = createSlice({
                 state.isError = false;
                 state.error = action.error.message;
             })
+            .addCase(googleLogin.pending, (state, action) => {
+                state.isLoading = true;
+                state.isError = false;
+                state.error = "";
+            })
+            .addCase(googleLogin.fulfilled, (state, action) => {
+                state.email = action.payload
+                state.isLoading = false;
+                state.isError = false;
+                state.error = "";
+            })
+            .addCase(googleLogin.rejected, (state, action) => {
+                state.email = ""
+                state.isLoading = false;
+                state.isError = true;
+                state.error = action.payload.message;
+            })
     }
 })
 
-export const { logOut, setUser } = authSlice.actions
+export const { logOut, setUser, toggleLoading } = authSlice.actions
 export default authSlice.reducer;
