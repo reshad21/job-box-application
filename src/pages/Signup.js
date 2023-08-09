@@ -13,7 +13,7 @@ const Signup = () => {
   const [disabled, setDisabled] = useState(true);
 
   const dispatch = useDispatch();
-  const {isError, error} = useSelector(state => state.auth);
+  const {isError, error, email, isLoading} = useSelector(state => state.auth);
 
   useEffect(() => {
     if (
@@ -40,6 +40,14 @@ const Signup = () => {
       toast.error(error)
     }
   }, [isError, error])
+
+
+  
+  useEffect(() => {
+    if (!isLoading && email) {
+      navigate('/');
+    }
+  }, [isLoading, email])
 
   return (
     <div className='flex h-screen items-center pt-14'>
