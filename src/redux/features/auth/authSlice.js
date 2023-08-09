@@ -74,7 +74,7 @@ export const authSlice = createSlice({
             .addCase(loginUser.rejected, (state, action) => {
                 state.email = ""
                 state.isLoading = true;
-                state.isError = false;
+                state.isError = true;
                 state.error = action.error.message;
             })
             .addCase(googleLogin.pending, (state, action) => {

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/login.svg";
@@ -9,7 +10,7 @@ const Login = () => {
   const { register, handleSubmit, reset } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, email } = useSelector(state => state.auth);
+  const { isLoading, email, error, isError } = useSelector(state => state.auth);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -21,6 +22,13 @@ const Login = () => {
       navigate('/');
     }
   }, [isLoading, email])
+
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error)
+    }
+  }, [isError, error])
 
   return (
     <div className='flex h-screen items-center'>
