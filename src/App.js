@@ -1,14 +1,26 @@
-import { Provider } from 'react-redux';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { RouterProvider } from "react-router-dom";
-import { store } from './redux/app/store';
+import auth from './firebase/firebase.config';
+import { setUser } from './redux/features/auth/authSlice';
 import routes from "./routes/routes";
+
 function App() {
-  // console.log(process.env);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(setUser(user.email))
+      }
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+
   return (
     <>
-      <Provider store={store}>
-        <RouterProvider router={routes} />
-      </Provider>
+      <RouterProvider router={routes} />
     </>
   );
 }
