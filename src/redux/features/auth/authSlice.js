@@ -38,7 +38,7 @@ export const authSlice = createSlice({
             state.isLoading = false;
         },
         toggleLoading: (state) => {
-            state.isLoading = !state.isLoading;
+            state.isLoading = false;
         }
     },
     extraReducers: (builder) => {
