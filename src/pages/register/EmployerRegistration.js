@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const EmployerRegistration = () => {
   const [countries, setCountries] = useState([]);
@@ -9,6 +9,7 @@ const EmployerRegistration = () => {
   const { handleSubmit, register, control } = useForm();
   const term = useWatch({ control, name: "term" });
   const navigate = useNavigate();
+  // const {a} = useRegisterMutation();
 
   const businessCategory = [
     "Automotive",
