@@ -10,7 +10,7 @@ import { logOut } from "../../redux/features/auth/authSlice";
 const Navbar = () => {
   const { pathname } = useLocation();
 
-  const { email, role, isLoading } = useSelector(state => state.auth);
+  const { user: { email, role }, isLoading } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
@@ -33,7 +33,7 @@ const Navbar = () => {
             Jobs
           </Link>
         </li>
-        
+
         {(email && role) && <li>
           <Link className='hover:text-primary' to='/dashboard'>
             Dashboard
