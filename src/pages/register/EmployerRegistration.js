@@ -12,7 +12,7 @@ const EmployerRegistration = () => {
   const term = useWatch({ control, name: "term" });
   const navigate = useNavigate();
   const [postUser, { isLoading, isError, isSuccess }] = useRegisterMutation();
-  const { email } = useSelector(state => state.auth);
+  const { user: { email} } = useSelector(state => state.auth);
 
   const businessCategory = [
     "Automotive",

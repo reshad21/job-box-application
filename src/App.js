@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouterProvider } from "react-router-dom";
 import auth from './firebase/firebase.config';
-import { setUser, toggleLoading } from './redux/features/auth/authSlice';
+import { getUser, toggleLoading } from './redux/features/auth/authSlice';
 import routes from "./routes/routes";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(setUser(user.email))
+        dispatch(getUser(user.email))
       }else{
         dispatch(toggleLoading());
       }

@@ -25,6 +25,17 @@ export const googleLogin = createAsyncThunk("auth/googleLogin", async () => {
     return data.user.email;
 })
 
+export const getUser = createAsyncThunk("auth/getUser", async (email) => {
+    const res = await fetch(`http://localhost:5000/user/${email}`);
+    const data = await res.json();
+    console.log(data);
+
+    if (data.status) {
+        return data;
+    }
+    return email;
+})
+
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -89,6 +100,27 @@ export const authSlice = createSlice({
             })
             .addCase(googleLogin.rejected, (state, action) => {
                 state.user.email = ""
+                state.isLoading = false;
+                state.isError = true;
+                state.error = action.payload.message;
+            })
+            .addCase(getUser.pending, (state, action) => {
+                state.isLoading = true;
+                state.isError = false;
+                state.error = "";
+            })
+            .addCase(getUser.fulfilled, (state, { payload }) => {
+                if (payload.status) {
+                    state.user = payload.data;
+                } else {
+                    state.user.email = payload;
+                }
+                state.isLoading = false;
+                state.isError = false;
+                state.error = "";
+            })
+            .addCase(getUser.rejected, (state, action) => {
+                state.user = ""
                 state.isLoading = false;
                 state.isError = true;
                 state.error = action.payload.message;
