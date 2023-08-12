@@ -28,7 +28,6 @@ export const googleLogin = createAsyncThunk("auth/googleLogin", async () => {
 export const getUser = createAsyncThunk("auth/getUser", async (email) => {
     const res = await fetch(`http://localhost:5000/user/${email}`);
     const data = await res.json();
-    console.log(data);
 
     if (data.status) {
         return data;

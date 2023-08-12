@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FiTrash } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { usePostJobMutation } from "../../redux/features/job/jobApi";
 
 const AddJob = () => {
-  const { handleSubmit, register, control } = useForm();
+  const {companyName} = useSelector(state => state.auth.user);
+  console.log(companyName);
+
+  const { handleSubmit, register, control } = useForm({
+    defaultValues: {companyName}
+  });
   const {
     fields: resFields,
     append: resAppend,
@@ -20,9 +27,17 @@ const AddJob = () => {
     remove: reqRemove,
   } = useFieldArray({ control, name: "requirements" });
 
+  const [postJob, { isLoading }] = usePostJobMutation();
   const onSubmit = (data) => {
     console.log(data);
+    postJob(data);
   };
+
+  useEffect(() => {
+    if (isLoading) {
+      return <p className="text-center">Data submitting...!</p>
+    }
+  }, [isLoading])
 
   return (
     <div className='flex justify-center items-center overflow-auto p-10'>

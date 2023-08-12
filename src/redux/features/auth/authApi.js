@@ -11,6 +11,7 @@ const authApi = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(data, { dispatch, queryFulfilled }) {
                 try {
+                    // eslint-disable-next-line no-unused-vars
                     const res = await queryFulfilled;
                     dispatch(getUser(data.email))
                 } catch (error) {
