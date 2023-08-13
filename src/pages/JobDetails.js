@@ -4,7 +4,7 @@ import { BsArrowReturnRight, BsArrowRightShort } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import meeting from "../assets/meeting.jpg";
-import { useGetJobByIdQuery } from "../redux/features/job/jobApi";
+import { useApplyMutation, useGetJobByIdQuery } from "../redux/features/job/jobApi";
 
 const JobDetails = () => {
 
@@ -30,6 +30,8 @@ const JobDetails = () => {
     _id,
   } = data?.data || {};
 
+  const [apply] = useApplyMutation();
+
   const handleApply = () => {
 
     if (user.role === "employer") {
@@ -47,6 +49,8 @@ const JobDetails = () => {
       jobId: _id,
     }
     console.log(data);
+    apply(data);
+
   }
   return (
     <div className='pt-14 grid grid-cols-12 gap-5 max-w-7xl mx-auto'>
