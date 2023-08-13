@@ -1,4 +1,5 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { toast } from 'react-hot-toast';
 import { BsArrowReturnRight, BsArrowRightShort } from "react-icons/bs";
 import { useSelector } from "react-redux";
@@ -9,10 +10,11 @@ import { useApplyMutation, useGetJobByIdQuery } from "../redux/features/job/jobA
 const JobDetails = () => {
 
   const user = useSelector(state => state.auth.user);
-  // console.log(user);
   const { id } = useParams();
   const { data } = useGetJobByIdQuery(id);
   const navigate = useNavigate();
+
+  const { register, reset, handleSubmit } = useForm();
 
   const {
     companyName,
@@ -48,10 +50,16 @@ const JobDetails = () => {
       email: user.email,
       jobId: _id,
     }
-    console.log(data);
     apply(data);
-
+    toast.success("Applied Job Successfully");
+    navigate("/dashboard/applied-job");
   }
+
+  const handleQuestion = (data) => {
+    console.log(data);
+    reset();
+  }
+
   return (
     <div className='pt-14 grid grid-cols-12 gap-5 max-w-7xl mx-auto'>
       <div className='col-span-9 mb-10'>
@@ -132,19 +140,23 @@ const JobDetails = () => {
               ))}
             </div>
 
-            <div className='flex gap-3 my-5'>
-              <input
-                placeholder='Ask a question...'
-                type='text'
-                className='w-full'
-              />
-              <button
-                className='shrink-0 h-14 w-14 bg-primary/10 border border-primary hover:bg-primary rounded-full transition-all  grid place-items-center text-primary hover:text-white'
-                type='button'
-              >
-                <BsArrowRightShort size={30} />
-              </button>
-            </div>
+            <form action="" onSubmit={handleSubmit(handleQuestion)}>
+              <div className='flex gap-3 my-5'>
+                <input
+                  placeholder='Ask a question...'
+                  type='text'
+                  className='w-full'
+                  {...register("question")}
+                />
+                <button
+                  className='shrink-0 h-14 w-14 bg-primary/10 border border-primary hover:bg-primary rounded-full transition-all  grid place-items-center text-primary hover:text-white'
+                  type='submit'
+                >
+                  <BsArrowRightShort size={30} />
+                </button>
+              </div>
+            </form>
+
           </div>
         </div>
       </div>
