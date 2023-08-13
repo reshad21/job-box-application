@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const JobCard = ({ jobData }) => {
-  console.log(jobData);
   const navigate = useNavigate();
   const { _id, position, companyName, location, employmentType } =
     jobData || {};

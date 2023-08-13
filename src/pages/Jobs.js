@@ -4,7 +4,6 @@ import { useGetJobsQuery } from "../redux/features/job/jobApi";
 
 const Jobs = () => {
   const { data, isLoading, isError } = useGetJobsQuery();
-  console.log(data);
   useEffect(() => {
     if (isLoading && isError) {
       return <p>Loading...</p>
