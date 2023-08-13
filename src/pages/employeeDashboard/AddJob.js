@@ -31,7 +31,8 @@ const AddJob = () => {
   const [postJob, { isLoading }] = usePostJobMutation();
   const onSubmit = (data) => {
     console.log(data);
-    postJob(data);
+    postJob({ ...data, applicants: [], quires: [] });
+    
     toast.success("job post successfully");
     navigate('/jobs');
   };
