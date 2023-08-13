@@ -40,7 +40,7 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         logOut: (state) => {
-            state.user.email = "";
+            state.user = { email: "", role: "" };
         },
         setUser: (state, action) => {
             state.user.email = action.payload;
@@ -87,12 +87,13 @@ export const authSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(googleLogin.pending, (state, action) => {
+                state.user.email = "";
                 state.isLoading = true;
                 state.isError = false;
                 state.error = "";
             })
             .addCase(googleLogin.fulfilled, (state, action) => {
-                state.user.email = action.payload
+                state.user.email = action.payload;
                 state.isLoading = false;
                 state.isError = false;
                 state.error = "";
@@ -101,7 +102,7 @@ export const authSlice = createSlice({
                 state.user.email = ""
                 state.isLoading = false;
                 state.isError = true;
-                state.error = action.payload.message;
+                state.error = action.error.message;
             })
             .addCase(getUser.pending, (state, action) => {
                 state.isLoading = true;
@@ -122,7 +123,7 @@ export const authSlice = createSlice({
                 state.user = ""
                 state.isLoading = false;
                 state.isError = true;
-                state.error = action.payload.message;
+                state.error = action.error.message;
             })
     }
 })

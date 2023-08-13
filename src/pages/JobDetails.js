@@ -21,10 +21,10 @@ const JobDetails = () => {
     overview,
     queries,
     _id,
-  } = data?.data;
+  } = data?.data || {};
 
   return (
-    <div className='pt-14 grid grid-cols-12 gap-5'>
+    <div className='pt-14 grid grid-cols-12 gap-5 max-w-7xl mx-auto'>
       <div className='col-span-9 mb-10'>
         <div className='h-80 rounded-xl overflow-hidden'>
           <img className='h-full w-full object-cover' src={meeting} alt='' />
