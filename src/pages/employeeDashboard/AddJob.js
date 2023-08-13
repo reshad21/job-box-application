@@ -1,12 +1,14 @@
 import React from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { toast } from 'react-hot-toast';
 import { FiTrash } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { usePostJobMutation } from "../../redux/features/job/jobApi";
 
 const AddJob = () => {
   const { companyName } = useSelector(state => state.auth.user);
-
+  const navigate = useNavigate();
   const { handleSubmit, register, control } = useForm({
     defaultValues: { companyName }
   });
@@ -30,6 +32,8 @@ const AddJob = () => {
   const onSubmit = (data) => {
     console.log(data);
     postJob(data);
+    toast.success("job post successfully");
+    navigate('/jobs');
   };
 
   // useEffect(() => {

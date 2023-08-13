@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { signOut } from "firebase/auth";
+import { toast } from 'react-hot-toast';
 import { Link, useLocation } from "react-router-dom";
 import auth from "../../firebase/firebase.config";
 import { logOut } from "../../redux/features/auth/authSlice";
@@ -16,7 +17,8 @@ const Navbar = () => {
   const handleLogOut = () => {
     signOut(auth).then(() => {
       dispatch(logOut());
-    })
+    });
+    toast.success("logout successfully");
   }
 
   return (

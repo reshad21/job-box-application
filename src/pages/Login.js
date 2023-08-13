@@ -20,8 +20,9 @@ const Login = () => {
   useEffect(() => {
     if (!isLoading && email) {
       navigate('/');
+      toast.success("Congratulations in Jobbox Portal");
     }
-  }, [isLoading, email])
+  }, [isLoading, email, navigate])
 
 
   useEffect(() => {

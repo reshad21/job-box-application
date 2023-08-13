@@ -45,7 +45,8 @@ const EmployerRegistration = () => {
 
   const onSubmit = (data) => {
     console.log({ ...data, role: "employer", email: email });
-    postUser({ ...data, role: "employer", email: email })
+    postUser({ ...data, role: "employer", email: email });
+    navigate("/dashboard");
   };
 
   return (
