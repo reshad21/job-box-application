@@ -5,15 +5,17 @@ import { BsArrowReturnRight, BsArrowRightShort } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import meeting from "../assets/meeting.jpg";
-import { useApplyMutation, useGetJobByIdQuery, useQuestionsMutation } from "../redux/features/job/jobApi";
+import { useApplyMutation, useGetJobByIdQuery, useQuestionsMutation, useReplyMutation } from "../redux/features/job/jobApi";
 
 const JobDetails = () => {
   const [reply, setReply] = useState("")
   const user = useSelector(state => state.auth.user);
   const { id } = useParams();
-  const { data } = useGetJobByIdQuery(id);
-  const navigate = useNavigate();
+  
+  const { data } = useGetJobByIdQuery(id, { pollingInterval: 500 });
+  const [questionReply, { isLoading }] = useReplyMutation();
 
+  const navigate = useNavigate();
   const { register, reset, handleSubmit } = useForm();
 
   const {
@@ -69,12 +71,14 @@ const JobDetails = () => {
     reset();
   }
 
+
   const handleReply = (id) => {
     const data = {
       reply,
       userId: id
     }
     console.log(data);
+    questionReply(data);
   }
 
   return (
