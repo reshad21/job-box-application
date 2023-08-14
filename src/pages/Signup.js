@@ -13,7 +13,8 @@ const Signup = () => {
   const [disabled, setDisabled] = useState(true);
 
   const dispatch = useDispatch();
-  const {isError, error, email, isLoading} = useSelector(state => state.auth);
+  const { isError, error, user: { email }, isLoading } = useSelector(state => state.auth);
+  console.log(isError, error, email, isLoading);
 
   useEffect(() => {
     if (
@@ -30,11 +31,11 @@ const Signup = () => {
   }, [password, confirmPassword]);
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     dispatch(createUser(data));
   };
 
-  
+
   useEffect(() => {
     if (isError) {
       toast.error(error)
@@ -42,12 +43,14 @@ const Signup = () => {
   }, [isError, error])
 
 
-  
+
   useEffect(() => {
     if (!isLoading && email) {
-      navigate('/');
+      console.log(`${email} sign up`);
+      navigate('/register');
+      toast.success("Sign up Complete Successfully..!")
     }
-  }, [isLoading, email])
+  }, [isLoading, email, navigate])
 
   return (
     <div className='flex h-screen items-center pt-14'>
