@@ -8,7 +8,7 @@ const jobApi = apiSlice.injectEndpoints({
                 url: "/job",
                 body: data,
             }),
-            invalidatesTags:["Jobs"],
+            invalidatesTags: ["Jobs"],
         }),
 
         apply: builder.mutation({
@@ -17,7 +17,7 @@ const jobApi = apiSlice.injectEndpoints({
                 url: "/apply",
                 body: data,
             }),
-            invalidatesTags:["Jobs"],
+            invalidatesTags: ["Jobs"],
         }),
 
         questions: builder.mutation({
@@ -26,7 +26,7 @@ const jobApi = apiSlice.injectEndpoints({
                 url: "/query",
                 body: data,
             }),
-            invalidatesTags:["chatting"],
+            invalidatesTags: ["chatting"],
         }),
 
         reply: builder.mutation({
@@ -35,31 +35,39 @@ const jobApi = apiSlice.injectEndpoints({
                 url: "/reply",
                 body: data,
             }),
-            invalidatesTags:["chatting"],
+            invalidatesTags: ["chatting"],
+        }),
+
+        search: builder.query({
+            query: (key) => ({
+                url: `/search/${key}`,
+            })
         }),
 
         appliedJob: builder.query({
             query: (email) => ({
                 url: `/applied-jobs/${email}`,
             }),
-            providesTags:["Jobs"],
+            providesTags: ["Jobs"],
         }),
 
         getJobs: builder.query({
             query: () => ({
                 url: "/jobs",
             }),
-            providesTags:["Jobs"],
+            providesTags: ["Jobs"],
         }),
 
         getJobById: builder.query({
             query: (id) => ({
                 url: `/job/${id}`,
             }),
-            providesTags:["chatting"]
+            providesTags: ["chatting"]
         }),
+
+
     })
 })
 
 
-export const { usePostJobMutation, useGetJobsQuery, useGetJobByIdQuery, useApplyMutation, useAppliedJobQuery, useQuestionsMutation, useReplyMutation  } = jobApi;
+export const { usePostJobMutation, useGetJobsQuery, useGetJobByIdQuery, useApplyMutation, useAppliedJobQuery, useQuestionsMutation, useReplyMutation, useSearchQuery } = jobApi;

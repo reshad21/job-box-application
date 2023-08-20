@@ -1,10 +1,11 @@
+import { gsap } from "gsap";
 import React, { useLayoutEffect, useRef, useState } from "react";
+import { BiSearchAlt } from "react-icons/bi";
 import hero1 from "../../assets/hero-01.jpg";
 import hero2 from "../../assets/hero-02.jpg";
 import hero3 from "../../assets/hero-03.jpg";
-import { BiSearchAlt } from "react-icons/bi";
 import Badge from "../../components/reusable/Badge";
-import { gsap } from "gsap";
+import { useSearchQuery } from "../../redux/features/job/jobApi";
 
 const Landing = () => {
   const keywords = [
@@ -73,6 +74,17 @@ const Landing = () => {
     };
   }, []);
 
+  // const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+  const { searchData, isError, isLoading, isSuccess } = useSearchQuery(search);
+  
+  const handleSearch = () => {
+    // dispatch(searchResult(search));
+    console.log(search);
+
+
+  }
+
   return (
     <div ref={el} className='h-screen'>
       <div className='max-w-2xl h-[80vh] rounded-b-full absolute top-0 left-1/2 -translate-x-1/2 overflow-hidden z-0'>
@@ -114,8 +126,10 @@ const Landing = () => {
                 name='search'
                 id='search'
                 placeholder='Job title or Keyword'
+                onBlur={(e) => setSearch(e.target.value)}
               />
               <button
+                onClick={handleSearch}
                 id='search-button'
                 className='p-2 rounded-full bg-primary  h-14 w-14 grid place-items-center'
               >
