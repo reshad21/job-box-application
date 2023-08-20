@@ -52,6 +52,9 @@ export const authSlice = createSlice({
         },
         searchResult: (state, action) => {
             state.searchValue = action.payload;
+        },
+        clearSearch: (state) => {
+            state.searchValue = "";
         }
     },
     extraReducers: (builder) => {
@@ -132,5 +135,5 @@ export const authSlice = createSlice({
     }
 })
 
-export const { logOut, setUser, toggleLoading, searchResult } = authSlice.actions
+export const { logOut, setUser, toggleLoading, searchResult, clearSearch } = authSlice.actions
 export default authSlice.reducer;

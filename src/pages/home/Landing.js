@@ -1,11 +1,13 @@
 import { gsap } from "gsap";
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { BiSearchAlt } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import hero1 from "../../assets/hero-01.jpg";
 import hero2 from "../../assets/hero-02.jpg";
 import hero3 from "../../assets/hero-03.jpg";
 import Badge from "../../components/reusable/Badge";
-import { useSearchQuery } from "../../redux/features/job/jobApi";
+import { searchResult } from "../../redux/features/auth/authSlice";
 
 const Landing = () => {
   const keywords = [
@@ -74,16 +76,18 @@ const Landing = () => {
     };
   }, []);
 
-  // const dispatch = useDispatch();
-  const [search, setSearch] = useState("");
-  const { searchData, isError, isLoading, isSuccess } = useSearchQuery(search);
-  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { searchValue } = useSelector(state => state.auth);
+
   const handleSearch = () => {
-    // dispatch(searchResult(search));
-    console.log(search);
-
-
+    dispatch(searchResult(searchValue));
+    console.log(searchValue);
+    if (searchValue !== "") {
+      navigate('/search');
+    }
   }
+
 
   return (
     <div ref={el} className='h-screen'>
@@ -126,7 +130,7 @@ const Landing = () => {
                 name='search'
                 id='search'
                 placeholder='Job title or Keyword'
-                onBlur={(e) => setSearch(e.target.value)}
+                onBlur={(e) => dispatch(searchResult(e.target.value))}
               />
               <button
                 onClick={handleSearch}

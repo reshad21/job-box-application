@@ -4,6 +4,7 @@ import Main from "../layout/main/Main";
 import JobDetails from "../pages/JobDetails";
 import Jobs from "../pages/Jobs";
 import Login from "../pages/Login";
+import SearchData from "../pages/SearchData";
 import Signup from "../pages/Signup";
 import CandidateDashboard from "../pages/candidateDashboard/CandidateDashboard";
 import JobApplied from "../pages/candidateDashboard/JobApplied";
@@ -25,6 +26,10 @@ const routes = createBrowserRouter([
       {
         path: "/jobs",
         element: <Jobs />,
+      },
+      {
+        path: "/search",
+        element: <SearchData />,
       },
       {
         path: "/job-details/:id",
