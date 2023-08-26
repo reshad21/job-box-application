@@ -17,14 +17,16 @@ const SearchData = () => {
         <div>
             <div className='pt-14 max-w-7xl mx-auto'>
                 <div className='bg-primary/10 p-5 rounded-2xl'>
-                    <h1 className='font-semibold text-xl'>Find Jobs</h1>
+                    <h1 className='font-semibold text-xl'>Search Jobs</h1>
                 </div>
                 <div className='grid grid-cols-2 gap-5 mt-5'>
                     {
-                        (data?.length === 0) ?
-                            <p>No Jobs Found in this  keyword</p>
-                            :
-                            data?.data.map(jobData => <JobCard key={jobData._id} jobData={jobData} />)
+                        data?.data.map(jobData => <JobCard key={jobData._id} jobData={jobData} />)
+                    }
+                </div>
+                <div className="">
+                    {
+                        (data?.length === 0) && <p>No Jobs Found in this {searchValue} keyword</p>
                     }
                 </div>
             </div>

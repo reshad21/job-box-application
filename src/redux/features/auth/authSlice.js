@@ -27,7 +27,9 @@ export const googleLogin = createAsyncThunk("auth/googleLogin", async () => {
 })
 
 export const getUser = createAsyncThunk("auth/getUser", async (email) => {
-    const res = await fetch(`http://localhost:5000/user/${email}`);
+    // const res = await fetch(`http://localhost:5000/user/${email}`);
+    const res = await fetch(`${process.env.REACT_APP_VERCEL_URL}/user/${email}`);
+    // const res = await fetch(`${process.env.REACT_APP_DEF_URL}/user/${email}`);
     const data = await res.json();
 
     if (data.status) {
